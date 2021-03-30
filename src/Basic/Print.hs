@@ -2,15 +2,16 @@ module Basic.Print where
 
 printFmt = do
   fmt 
-  fmtChar ("Alfin", "Surya")
+  fmtSection ("Alfin", "Surya")
   putStrFn
   putStrLnFn
 
 -- any type
 fmt = print "Message from fmt"
 
-fmtChar :: (String, String) -> IO ()
-fmtChar (a, b) = print (a ++ b) -- () -> ([a0], [a0])
+-- Different between print ".." 
+fmtSection :: (String, String) -> IO ()
+fmtSection (a, b) = print (a ++ b) -- () -> ([a0], [a0])
 
 -- String type 
 putStrFn = putStr "Message from putStr"

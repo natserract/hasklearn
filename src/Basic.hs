@@ -19,6 +19,5 @@ useLet :: Int -> Int
 useLet x =
   let c = c * c in x
 
-length' :: (Num b) => [a] -> b
-length' [] = 0
-length' xs = sum [1 | _ <- xs]
+-- length
+len = length [1..10]
