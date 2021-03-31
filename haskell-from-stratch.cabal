@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 83085a2cca5f581f1f234e1d2ea334dc76846c3933242f2baf467ae01f339ffe
+-- hash: 6bfbabf285b1f29b2a5e4f1474d453b36d5913ddc5730158f78e52222916d1d1
 
 name:           haskell-from-stratch
 version:        0.1.0.0
@@ -34,6 +34,7 @@ library
       Basic.Operators
       Basic.Print
       Basic.Types
+      Basic.Variables
       Mod
   other-modules:
       Paths_haskell_from_stratch

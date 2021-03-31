@@ -1,7 +1,7 @@
 {-# LANGUAGE PostfixOperators #-}
+{-# LANGUAGE BangPatterns #-}
 
 module Basic.Operators where
-
 import Data.List (sort)
 
 operators = do
@@ -35,7 +35,11 @@ operators = do
   print sortDoll
   print sortDollPrior
   whichPrior
-
+  print $ "ReadAs Operator " ++ readaslists ([1, 2], "all")
+  print (bang undefined) -- Okay
+  print (recurseLists [1, 3])
+  print (recurseStr ["recurse", "str"])
+  
 -- # equal
 equal :: Bool
 equal = 5 == 5
@@ -72,15 +76,19 @@ divide2 :: Integer
 divide2 = 10 `quot` 2 -- 5
 
 -- # Raise operators
+
 -- **
+
 multiplyFloat :: Double
 multiplyFloat = 2 ** 2 -- 4.0 (If ** always return -> Float)
 
 -- ^
+
 multiplyFactorize :: Integer
 multiplyFactorize = 2 ^ 3 -- (2x2x2=8 -> Integer)
 
--- ^^
+-- ^ ^
+
 multiplyFactorizeFloat :: Double
 multiplyFactorizeFloat = 2 ^^ 3 -- That's mean (2x2x2=8.0 -> Float)
 
@@ -208,15 +216,16 @@ sortDollPrior :: [Char]
 sortDollPrior = sort $ "alfin" ++ "surya"
 
 {--
- This means the argument with the $ operator (from the right) which will be evaluated / executed first
+ This means the argument with the $ operator (from the right)
+ which will be evaluated / executed first
 --}
 whichPrior :: IO ()
 whichPrior = print . sort $ "alfin" ++ "surya"
 
-
 -- # Custom operators
 (!) :: Bool -> Bool
 (!) = not
+
 logicalNotCustomOp :: Bool
 logicalNotCustomOp = (True !)
 
@@ -226,3 +235,78 @@ m1 $$ m2 = m1 ++ m2
 
 customOp :: [Char]
 customOp = "Alfin" $$ "Surya"
+
+-- # “read as” operator / as-pattern (aliasing)
+-- @ -> Decompose all parameter
+readaslists :: ([Int], [Char]) -> String
+readaslists ([], x) = show 0
+readaslists (p@(t : res), x) 
+  | x == "all" = show p -- [1,2]
+  | x == "head" = show t -- [1]
+  | x == "tail" = show res -- [2]
+  | otherwise = show [0]
+
+
+-- # bang operator
+-- ! -> force evaluation (strictness flag)
+-- ! -> Look like strictNullChecks in TypeScript
+-- write strict variable/tuple
+-- undefined is exceptional value
+bang :: p -> Bool
+bang x = True -- x undefined (when compile no errors)
+
+-- Prelude.undefined
+bangStrict :: p -> Bool 
+bangStrict !x = True -- x undefined (errors because x evaluated strictly | no undefined)
+
+{--
+# list comprehension generator
+<- = generator -> binding element of list
+Use for: determination of value
+Use for: manipulate lists
+recursive function
+(|) is a pipe generator
+
+Haskell:
+recurseLists :: Num a => [a] -> [a]
+recurseLists arr = [arr * 2 | arr <- arr]
+
+Javascript:
+function recurseLists(arr){
+  let result = []
+  
+  for(let i=0; i<arr.length; i++){
+	  let element = arr[i]
+    
+    if (typeof element !== "number") result = [0] //base case
+      recurseLists(result.push(element * 2)) // recursive
+  }
+  
+  return result.reverse()
+}
+
+recurseLists(
+   let result = []
+  	
+   loop < arr.length (2) (
+      recurseLists(
+        result.push(el*2) // [2, 4] -> index 1
+
+          recurseLists(
+              result.push(el*2) // [2] -> index 0
+          )    
+      )  
+   )
+   
+   result.reverse() = [4, 2] -> combination of ([el*2], [el*2])
+)    
+**/
+--}
+recurseLists :: Num a => [a] -> [a]
+recurseLists arr = [arr * 2 | arr <- reverse arr]
+
+-- I think it's like (where operation) in pattern matching, but without conditions
+-- in this example, t bind into chars
+recurseStr :: [a] -> ([a], [Char])
+recurseStr chars 
+  | t <- "it's work!" = (reverse chars, t) -- (["str","recurse"],"it's work!")
