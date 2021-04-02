@@ -25,6 +25,7 @@ patternM s
   | otherwise = "value not found"
 
 -- pattern matching access elements using where
+-- where clause (define local variable)
 patternAccEl :: [Char] -> [Char]
 patternAccEl s
   | s == "yoo" = "" ++ e

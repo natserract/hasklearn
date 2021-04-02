@@ -269,7 +269,7 @@ recursive function
 
 Haskell:
 recurseLists :: Num a => [a] -> [a]
-recurseLists arr = [arr * 2 | arr <- arr]
+recurseLists arr = [arr * 2 | arr <- reverse arr]
 
 Javascript:
 function recurseLists(arr){

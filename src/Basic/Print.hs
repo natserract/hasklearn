@@ -5,6 +5,7 @@ printFmt = do
   fmtSection ("Alfin", "Surya")
   putStrFn
   putStrLnFn
+  print listsFmt
 
 -- any type
 fmt = print "Message from fmt"
@@ -19,3 +20,6 @@ putStrFn = putStr "Message from putStr"
 -- String type w newline
 -- The same as putStr, but adds a newline char
 putStrLnFn = putStrLn "Message from putStrLnFunc"
+
+-- Print lists
+listsFmt = show ["list_1", "list_2", "list_3"]

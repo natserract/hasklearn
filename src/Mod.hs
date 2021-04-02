@@ -1,13 +1,13 @@
 module Mod ( 
     run,
 ) where
-
-import Basic.Print
+import Basic.Print ( printFmt )
 import Basic.Operators ( operators )
-import Basic.Comments
+import Basic.Comments ( comments )
 import qualified Basic.Modules as Modules
 import qualified Basic.Conditions as Conditions
-import Basic.Types
+import Basic.Types ( types )
+import qualified Basic.Variables as Variables
 
 -- Monad IO
 run :: IO ()
@@ -19,3 +19,4 @@ run = do
     Modules.comments
     types
     Conditions.conditions
+    Variables.variables
