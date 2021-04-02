@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6bfbabf285b1f29b2a5e4f1474d453b36d5913ddc5730158f78e52222916d1d1
+-- hash: 81b07f146eca51725c6182ebcf605b9c57e41305ceb28f004ed2ec9b2554f323
 
 name:           haskell-from-stratch
 version:        0.1.0.0
@@ -27,9 +27,9 @@ source-repository head
 
 library
   exposed-modules:
-      Basic
       Basic.Comments
       Basic.Conditions
+      Basic.Lists
       Basic.Modules
       Basic.Operators
       Basic.Print
