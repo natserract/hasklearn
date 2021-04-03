@@ -72,6 +72,7 @@ multiply = 2 * 2 -- 4
 divide :: Double
 divide = 10 / 2 -- 5.0
 
+-- # Multiply using infix operator `quot`
 divide2 :: Integer
 divide2 = 10 `quot` 2 -- 5
 
@@ -80,7 +81,7 @@ divide2 = 10 `quot` 2 -- 5
 -- **
 
 multiplyFloat :: Double
-multiplyFloat = 2 ** 2 -- 4.0 (If ** always return -> Float)
+multiplyFloat = 2 ** 2 -- 4.0 (If ** always return -> Double)
 
 -- ^
 
@@ -90,7 +91,7 @@ multiplyFactorize = 2 ^ 3 -- (2x2x2=8 -> Integer)
 -- ^ ^
 
 multiplyFactorizeFloat :: Double
-multiplyFactorizeFloat = 2 ^^ 3 -- That's mean (2x2x2=8.0 -> Float)
+multiplyFactorizeFloat = 2 ^^ 3 -- That's mean (2x2x2=8.0 -> Double)
 
 -- # Concat operators
 concatStr :: [Char]
@@ -305,7 +306,7 @@ recurseLists(
 recurseLists :: Num a => [a] -> [a]
 recurseLists arr = [arr * 2 | arr <- reverse arr]
 
--- I think it's like (where operation) in pattern matching, but without conditions
+-- I think it's like (where operation) 
 -- in this example, t bind into chars
 recurseStr :: [a] -> ([a], [Char])
 recurseStr chars 

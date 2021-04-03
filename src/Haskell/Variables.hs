@@ -19,7 +19,6 @@ variables = do
   print $ locales ("have", "indo")
 
 -- # Basic variables
--- constant (immutable)
 -- Basic variables (global variable)
 x :: Integer
 x = 6
