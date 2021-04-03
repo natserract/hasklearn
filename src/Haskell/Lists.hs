@@ -1,4 +1,4 @@
-module Basic.Lists where
+module Haskell.Lists where
 
 lists :: [[Char]] -> IO ()
 lists [] = print "Lists is empty!" -- Check if nill!

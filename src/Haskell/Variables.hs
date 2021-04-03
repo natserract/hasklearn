@@ -1,7 +1,7 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Basic.Variables where
+module Haskell.Variables where
 
 {--
   Notes:

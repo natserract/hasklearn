@@ -1,5 +1,5 @@
 
-module Basic.Modules where 
+module Haskell.Modules where 
 
 modules = print "Modules"
 

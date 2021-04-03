@@ -1,4 +1,4 @@
-module Basic.Types where
+module Haskell.Types where
 
 types = do 
   print a

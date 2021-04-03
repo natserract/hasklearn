@@ -1,4 +1,4 @@
-module Basic.Print where
+module Haskell.Print where
 
 printFmt = do
   fmt 

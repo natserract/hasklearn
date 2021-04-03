@@ -1,6 +1,6 @@
 {-# LANGUAGE BlockArguments #-}
 
-module Basic.Conditions where
+module Haskell.Conditions where
 
 conditions = do
   print (patternM 2)

@@ -1,5 +1,5 @@
 module Main where
-import Mod
+import Haskell.Init
 
 main :: IO ()
 main = do

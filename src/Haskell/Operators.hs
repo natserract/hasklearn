@@ -1,7 +1,7 @@
 {-# LANGUAGE PostfixOperators #-}
 {-# LANGUAGE BangPatterns #-}
 
-module Basic.Operators where
+module Haskell.Operators where
 import Data.List (sort)
 
 operators = do

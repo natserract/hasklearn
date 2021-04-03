@@ -1,4 +1,4 @@
-module Basic.Comments where
+module Haskell.Comments where
 
 comments = print "Comments from comments"
 -- Inline Comment 
