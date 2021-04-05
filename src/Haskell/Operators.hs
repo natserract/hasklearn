@@ -201,7 +201,7 @@ printF3Compose = f3 2
 
 {--
    # ($) - dollar,
-   - call function without parentheses
+   - avoid parentheses (call)
    - syntatic sugar
    - $ about priority
    - no arguments be like (.)

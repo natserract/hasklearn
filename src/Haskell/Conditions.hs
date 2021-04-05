@@ -10,7 +10,6 @@ conditions = do
   print (caseofNested 0)
 
 -- # If else
--- (No else if) -> no flexible
 ifels :: Eq a => a -> a -> Maybe [Char]
 ifels x y =
   if x == y
@@ -37,6 +36,7 @@ patternAccEl s
 caseofWBasic :: (Eq a, Num a) => a -> [Char]
 caseofWBasic b = case b of
   0 -> "caseofWBasic = 0"
+  _ -> "Not found"
 
 -- using do
 caseofNested :: (Eq a, Num a) => a -> [Char]
