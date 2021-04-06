@@ -305,9 +305,15 @@ recurseLists(
 --}
 recurseLists :: Num a => [a] -> [a]
 recurseLists arr = [arr * 2 | arr <- reverse arr]
-
 -- I think it's like (where operation) 
 -- in this example, t bind into chars
 recurseStr :: [a] -> ([a], [Char])
 recurseStr chars 
   | t <- "it's work!" = (reverse chars, t) -- (["str","recurse"],"it's work!")
+
+concatTwoStr :: [Char] -> [Char]
+concatTwoStr str = do 
+    g <- ["Ambisious"]
+    if str == ""
+      then g ++ ""
+    else str ++ ""

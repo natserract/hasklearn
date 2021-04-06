@@ -20,3 +20,12 @@ apply = reverseMap [1, 2] [3, 4]
 -- | Example: 20 `multiplyInf` 5
 multiplyInf :: Num a => a -> a -> a
 multiplyInf a b = a * b
+
+
+-- # parameter as a function
+-- ( ) is a function
+clbk :: a -> b -> (a, b)
+clbk a b = (a, b)
+
+applyClbk :: b -> ((p -> IO (), [Char]), b)
+applyClbk = clbk (\c -> print "Clbk applied" , "Only char")

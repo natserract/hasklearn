@@ -3,12 +3,14 @@ module Haskell.ErrorFaq where
 
 {--
   # No instance for (Eq a) arising from a use of ‘==’ ...
-  
+  -> Add deriving for your type
   Code:
-  f :: forall a . a -> Maybe Int
+  data IsNotValid = Valid | NotValid 
+  isNotValid :: IsNotValid -> IO ()
+  isNotValid x = print Valid
   
   Solution:
-  f :: (forall a . a -> Maybe Int)
+  data IsNotValid = Valid | NotValid deriving (Show)
 
 
   # Couldn't match expected type ‘x -> Bool’ with actual type ‘Bool’
