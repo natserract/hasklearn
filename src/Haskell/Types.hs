@@ -1,7 +1,14 @@
+{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE BlockArguments #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE TypeFamilies #-}
+
+-- See: https://www.haskell.org/onlinereport/basic.html
 
 module Haskell.Types where
 
@@ -15,6 +22,7 @@ types = do
   print integersFunc
   print checkingTypeFunc
   print $ checkedDivision (2, 1)
+  printable
 
 
 -- # Basic Types
@@ -66,14 +74,6 @@ doubleFunc = 2.0
 fnType :: Show a => a -> IO ()
 fnType = print
 
--- # parameter as a function
--- ( ) type is a function
-clbk :: a -> b -> (a, b)
-clbk a b = (a, b)
-
-applyClbk :: b -> ((p -> IO (), [Char]), b)
-applyClbk = clbk (\c -> print "Clbk applied" , "Only char")
-
 -- # Maybe Type
 -- Catch the failure/something may not be there
 -- Haskell: Maybe<T>: Just(V) / Nothing; Rust: Option<T>: Some(V) / None
@@ -114,12 +114,55 @@ isEither a
   | not a = Right 2
 
 -- # Type Classes
+-- What is typeclasses? Typeclasses define a set of functions that can have different  
+-- implementations depending on the type of data they are given.
+-- Check types of instance (e.g Eq: (==) :: a -> a -> Bool), using stack ghci ':info Eq'
 numTypeClasses :: (Num a) => a
 numTypeClasses = 100
 
 equalityTypeClasses :: (Eq a, Num a) => (a, b) -> [Char]
 equalityTypeClasses (a, b)
   | a == 100 = "True"
+
+-- Own Type Classes
+-- I called it's implementation of types (impl of struct / types) like Rust
+-- class in haskell it's not class in another language as object. It's different.
+
+-- Basic type classes
+class Printable a where
+    fmt :: a -> IO ()
+instance Printable String where
+  fmt = print
+
+printable :: IO (); printable = fmt "Hallo fmt"
+
+-- Type class with functional dependencies (fundeps)
+-- Able to determine params type 
+class Mordor a b | a -> b  where
+  type E a
+  (/*) :: E a -> a
+  -- (/=) :: a -> b
+
+-- instance Mordor Int Int where
+--   (/*) x y = x
+
+-- mordor = (/*) 2 5
+
+-- g :: Int
+-- g = doThing 2
+-- m = printable "Alfin Surya"
+-- doThing :: (Example a) => a -> Int
+-- doThing = (/\) 2
+
+-- o = doThing 20
+
+-- instance Example Int where
+--   <>  = a + b
+
+-- func :: Example a => a -> a
+-- func a = simple
+
+-- m = func (10)
 
 -- See more: https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-Ord.html
 -- >=, >, <, >, <, ==, min, max
@@ -204,7 +247,10 @@ newtype Primitive t = Primitive t
 -- Union / Enum type
 {--
   Haskell:
-    data PrimitiveOrConstructor t = Constructor t | String | Number | Boolean
+    data PrimitiveOrConstructor t = Constructor t 
+      | String 
+      | Number 
+      | Boolean
 
   TypeScript:
     type PrimitiveOrConstructor<T> =
@@ -230,14 +276,16 @@ data Field = Field
     address :: String
   }
 
-checkNum :: p -> Field
-checkNum n =
+checkNum :: Field
+checkNum = do {
   Field
     { idx = 2,
       names = "",
       phone = 628191069231,
-      address = "Jl. Raya Kartini 99"
+      address = "Kartini Street No. 99"
     }
+}
+
 
 -- generic adt (parameterized data type)
 data Days = Monday | Tuesday
@@ -251,9 +299,8 @@ checkTime t = case t of
 
 -- adt w deriving
 -- deriving: derived class type -> for allowing to convert any type (eg. Show, Eq, Ord, etc)
+-- deriving (Show, Eq): instance of type class
 data IsNotValid = Valid | NotValid deriving (Show) 
 
 isNotValid :: IsNotValid -> IO ()
 isNotValid x = print Valid -- for allowing show in Print use (Show)
-
--- TODO: ADT Tree

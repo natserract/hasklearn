@@ -303,17 +303,21 @@ recurseLists(
 )    
 **/
 --}
+
+-- <- operator use for stored value
 recurseLists :: Num a => [a] -> [a]
 recurseLists arr = [arr * 2 | arr <- reverse arr]
+
 -- I think it's like (where operation) 
 -- in this example, t bind into chars
+-- <- operator use for stored value
 recurseStr :: [a] -> ([a], [Char])
 recurseStr chars 
   | t <- "it's work!" = (reverse chars, t) -- (["str","recurse"],"it's work!")
 
 concatTwoStr :: [Char] -> [Char]
 concatTwoStr str = do 
-    g <- ["Ambisious"]
+    g <- ["Ambisious"] -- <- operator use for stored value
     if str == ""
       then g ++ ""
     else str ++ ""

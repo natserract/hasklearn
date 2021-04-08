@@ -1,6 +1,10 @@
 
 module Haskell.Modules where 
 
+-- In Prelude module and Modules.hs, have same operator name (*), 
+-- So for allowing this, we can hide Prelude operator, with hiding (..)
+import Prelude hiding ((*))
+
 modules = print "Modules"
 
 {- 
@@ -10,3 +14,8 @@ modules = print "Modules"
 --}
 comments :: IO ()
 comments = print "Comments from modules"
+
+-- import Prelude hiding ((*))
+(*) :: Int -> Int -> Int
+x * 0 = 0
+x * y = x * ( y - 1)

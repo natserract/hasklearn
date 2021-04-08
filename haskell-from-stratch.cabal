@@ -4,16 +4,16 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7637e44bb4a921f24324c1c24549321b4d862624ae37541d773588c136eeb6de
+-- hash: e360ed9bdfa75786e5fffa3391b8a1e277991e132b8564ec0d14fe378e138e24
 
 name:           haskell-from-stratch
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/haskell-from-stratch#readme>
 homepage:       https://github.com/githubuser/haskell-from-stratch#readme
 bug-reports:    https://github.com/githubuser/haskell-from-stratch/issues
-author:         Natserract
+author:         Author name here
 maintainer:     example@example.com
-copyright:      2021 Natserract
+copyright:      2021 Author name here
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -29,6 +29,7 @@ library
   exposed-modules:
       Haskell.Comments
       Haskell.Conditions
+      Haskell.ErrorFaq
       Haskell.Functions
       Haskell.Infix
       Haskell.Init
@@ -36,7 +37,6 @@ library
       Haskell.Modules
       Haskell.Operators
       Haskell.Print
-      Haskell.Try
       Haskell.Types
       Haskell.Variables
   other-modules:

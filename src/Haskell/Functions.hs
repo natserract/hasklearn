@@ -4,7 +4,7 @@ module Haskell.Functions where
 
 functions = do 
   print apply
-  print (20 `multiplyInf` 2)
+  funcMultiplyInf
 
 -- fungsi yang mengambil nilai n argumen dan mengubahnya menjadi n fungsi yang msing2
 -- menerima satu argumen
@@ -21,11 +21,13 @@ apply = reverseMap [1, 2] [3, 4]
 multiplyInf :: Num a => a -> a -> a
 multiplyInf a b = a * b
 
+funcMultiplyInf :: IO ()
+funcMultiplyInf = print (20 `multiplyInf` 2)
 
--- # parameter as a function
--- ( ) is a function
 clbk :: a -> b -> (a, b)
 clbk a b = (a, b)
 
-applyClbk :: b -> ((p -> IO (), [Char]), b)
-applyClbk = clbk (\c -> print "Clbk applied" , "Only char")
+-- # do: chain all function with same type
+applyClbk :: b -> (IO (), b)
+applyClbk = do
+  clbk $ print ("Clbk applied" , "Only char")

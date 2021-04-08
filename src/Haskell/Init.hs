@@ -7,7 +7,6 @@ import qualified Haskell.Modules as M
 import Haskell.Operators (operators)
 import Haskell.Print (printFmt)
 import qualified Haskell.Variables as V
-import Haskell.Try
 import Haskell.Infix
 import Haskell.Functions
 import Haskell.Types
@@ -23,6 +22,5 @@ run = do
   C.conditions
   V.variables
   L.lists ["List 1", "List 2"]
-  tryTest
   functions
   types
