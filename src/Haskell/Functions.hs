@@ -10,6 +10,8 @@ functions = do
 -- menerima satu argumen
 
 -- # const function
+-- const : is a unary function. Remember curried functions always return a unary function. 
+-- See this reference: https://github.com/wisn/jargon-pemrograman-fungsional#currying
 reverseMap :: b -> [a] -> [a]
 reverseMap = const reverse 
 
