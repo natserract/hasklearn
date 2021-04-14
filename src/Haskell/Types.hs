@@ -136,33 +136,7 @@ instance Printable String where
 
 printable :: IO (); printable = fmt "Hallo fmt"
 
--- Type class with functional dependencies (fundeps)
--- Able to determine params type 
-class Mordor a b | a -> b  where
-  type E a
-  (/*) :: E a -> a
-  -- (/=) :: a -> b
-
--- instance Mordor Int Int where
---   (/*) x y = x
-
--- mordor = (/*) 2 5
-
--- g :: Int
--- g = doThing 2
--- m = printable "Alfin Surya"
--- doThing :: (Example a) => a -> Int
--- doThing = (/\) 2
-
--- o = doThing 20
-
--- instance Example Int where
---   <>  = a + b
-
--- func :: Example a => a -> a
--- func a = simple
-
--- m = func (10)
+-- Type families
 
 -- See more: https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-Ord.html
 -- >=, >, <, >, <, ==, min, max
@@ -268,6 +242,7 @@ checkColor c = case c of
   Blue -> print "blue"
 
 -- adt record
+-- Records type
 -- see: https://www.schoolofhaskell.com/user/Geraldus/algebraic-data-types-adts-with-aeson
 data Field = Field
   { idx :: Int,
@@ -285,7 +260,6 @@ checkNum = do {
       address = "Kartini Street No. 99"
     }
 }
-
 
 -- generic adt (parameterized data type)
 data Days = Monday | Tuesday

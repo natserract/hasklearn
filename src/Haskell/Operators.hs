@@ -29,8 +29,6 @@ operators = do
   print indexOp
   headOp [2, 3, 4]
   print printFCompose
-  print printF2Compose
-  print printF3Compose
   print tupl
   print sortDoll
   print sortDollPrior
@@ -79,17 +77,14 @@ divide2 = 10 `quot` 2 -- 5
 -- # Raise operators
 
 -- **
-
 multiplyFloat :: Double
 multiplyFloat = 2 ** 2 -- 4.0 (If ** always return -> Double)
 
 -- ^
-
 multiplyFactorize :: Integer
 multiplyFactorize = 2 ^ 3 -- (2x2x2=8 -> Integer)
 
 -- ^ ^
-
 multiplyFactorizeFloat :: Double
 multiplyFactorizeFloat = 2 ^^ 3 -- That's mean (2x2x2=8.0 -> Double)
 
@@ -139,39 +134,8 @@ headOp (x : rest) = print rest -- excerpt index 0
 tupl :: ([Char], (Integer, Integer))
 tupl = ("Tuple", (2, 2))
 
-{--
-  # Functions compositions (infix operator)
-  - . (Compose functions together
-  - Is a way to chain two or more functions together.
-  - Left/right composition
-  - (.) :: (b -> c) -> (a -> b) -> a -> c
-
-  Haskell:
-  m x = x * x
-  g x = x + 1
-
-  f = m . g
-  f2 = g . m
-
- Javascript:
-  function m (x) {
-    return x * x
-  }
-
-  function g(x) {
-    return x + 1
-  }
-
-  function f(x) {
-    return m(g(2))) -> Output: 9 -> 2+1*3
-  }
-
-  function f2(x) {
-    return g(m(2)) -> Output: 5 -> 2*2+1
-  }
-
-  - operator: => context inheritance from class
---}
+-- # Functions compositions (infix operator)
+-- . (Compose functions together 
 m :: Num a => a -> a
 m x = x * x
 
@@ -184,20 +148,16 @@ c x = x * 2
 f :: Integer -> Integer
 f = m . g -- m(g(x))
 
-f2 :: Integer -> Integer
-f2 = g . m -- g(m(x))
-
-f3 :: Integer -> Integer
-f3 = (* 2) . m . g -- c(m(g(x)))
-
 printFCompose :: Integer
 printFCompose = f 2
 
-printF2Compose :: Integer
-printF2Compose = f2 2
+clbk :: a -> b -> (a, b)
+clbk a b = (a, b)
 
-printF3Compose :: Integer
-printF3Compose = f3 2
+-- # do notation: chain all function with same type
+applyClbk :: b -> (IO (), b)
+applyClbk = do
+  clbk $ print ("Clbk applied", "Only char")
 
 {--
    # ($) - dollar,
