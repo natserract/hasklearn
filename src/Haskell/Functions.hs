@@ -9,14 +9,10 @@ functions = do
 multipleArgs :: Num a => a -> a -> a -> a
 multipleArgs x y z = x * y * z
 
--- Anonymous function
+-- Lambda/Anonymous function
 -- anonym 2 5 = 10
 anonym :: Integer -> Integer -> Integer
 anonym = \x y -> x * y
-
--- Lambda function
-lambda :: Integer -> Integer
-lambda = \x -> x + 1
 
 -- # Currying function 
 -- const : is a unary function. Remember curried functions always return a unary function.
