@@ -106,6 +106,7 @@ f3 = (* 2) . m . g -- c(m(g(x)))
 data Override = Morning Integer | Evening Integer 
 overrideFn :: Override -> Override -> Bool
 overrideFn (Morning a) (Morning b) = a == b
+overrideFn (Evening a) (Evening b) = a /= b
 overrideFn _ _ = False
 
 
