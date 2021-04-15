@@ -284,3 +284,4 @@ isNotValid x = print Valid -- for allowing show in Print use (Show)
 -- Fun deps
 -- Types Family
 -- ADT Node Tree
+-- Pattern Synonyms
