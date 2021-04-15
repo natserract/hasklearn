@@ -102,7 +102,13 @@ f2 = g . m -- g(m(x))
 f3 :: Integer -> Integer
 f3 = (* 2) . m . g -- c(m(g(x)))
 
+-- # Override function
+data Override = Morning Integer | Evening Integer 
+overrideFn :: Override -> Override -> Bool
+overrideFn (Morning a) (Morning b) = a == b
+overrideFn _ _ = False
+
+
 -- Todo:
 -- Recursive Function
 -- Higher Order Functions
-
