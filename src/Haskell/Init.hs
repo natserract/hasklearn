@@ -24,3 +24,4 @@ run = do
   L.lists ["List 1", "List 2"]
   functions
   types
+  infixOp

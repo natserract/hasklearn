@@ -278,3 +278,9 @@ data IsNotValid = Valid | NotValid deriving (Show)
 
 isNotValid :: IsNotValid -> IO ()
 isNotValid x = print Valid -- for allowing show in Print use (Show)
+
+
+-- Todo:
+-- Fun deps
+-- Types Family
+-- ADT Node Tree
