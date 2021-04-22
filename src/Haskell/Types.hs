@@ -290,7 +290,8 @@ isNotValid x = print Valid -- for allowing show in Print use (Show)
 
 -- # Fun deps
 -- | Functional dependencies are used to constrain the parameters of type classes
--- a b -> c that a and b are determined uniquely
+-- a b -> c is a functional dependency, a and b are determined uniquely
+-- c sepenuhnya ditentukan oleh a dan b
 -- Avoiding ambigous types, because for default a, b, c is independent
 class Result a b c | a b -> c where
   instancex :: a -> b -> c
@@ -312,8 +313,19 @@ instance Eq a => Calc a a where
 f0 :: Bool
 f0 = check 2 2
 
+-- Multiple fundeps
+class Mult a b c | a b -> c, b -> a where
+  mult :: a -> b -> c -> a
+instance Num a => Mult a a a where
+  mult a b c = a * b * c
+
+m1 :: String
+m1 = show $ mult 2 10 2
+
 
 -- # Types families
+-- type families vs fundeps: https://gitlab.haskell.org/ghc/ghc/-/wikis/tf-vs-fd
+-- It's like conditional types in TypeScript: "T extends U ? X : Y"
 -- G1 & G2 it's same, 2 syntax version
 -- Open type family
 type family G a :: *
