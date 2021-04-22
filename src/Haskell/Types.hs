@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE BlockArguments #-}
 {-# LANGUAGE DataKinds #-}
@@ -24,6 +25,7 @@ types = do
   print checkingTypeFunc
   print $ checkedDivision (2, 1)
   printable
+  print ("httpAction", httpAction)
 
 
 -- # Basic Types
@@ -327,23 +329,24 @@ m1 = show $ mult 2 10 2
 -- type families vs fundeps: https://gitlab.haskell.org/ghc/ghc/-/wikis/tf-vs-fd
 -- It's like conditional types in TypeScript: "T extends U ? X : Y"
 -- G1 & G2 it's same, 2 syntax version
--- Open type family
+-- Type families come in three variations: data families, open type synonym families, closed type synonym families
+-- open type synonym families
 type family G a :: *
 type instance G Int = Bool
 type instance G String = Char
 
--- Closed type family
+-- closed type synonym families
 type family G1 a where
   G1 Int = Bool
   G1 a = a -- Otherwise Int
 
--- Data family (type)
+-- data families (type)
 -- Class
 data family A t
 data instance A Int = Bool
 data instance A String = Char
 
--- Data family (function)
+-- data families (function)
 data family A2 a b
 data instance A2 a b where
   DoSomeThing :: A2 a Int
@@ -351,3 +354,32 @@ data instance A2 a b where
 
 f :: G1 Int
 f = True
+
+-- Real case
+-- Using type classes
+data Http = GET 
+  | POST 
+  | PUT 
+  | DELETE 
+  | PATCH deriving (Eq, Enum)
+
+data Endpoint = Tnc 
+  | Register 
+  | EmailVerif 
+  | NotFound deriving (Eq, Enum, Show)
+
+class HttpMethod u h e | h -> e 
+  where selectMethod :: u -> h -> e -- (Maybe e?)
+instance HttpMethod [Char] Http Endpoint where
+  selectMethod u h = do
+    case h of
+      GET -> Tnc
+      POST -> Register
+      PUT -> Register
+      DELETE -> NotFound
+      PATCH -> NotFound
+
+httpAction :: Endpoint
+httpAction = do
+  let url = "url::endpoint"
+  selectMethod url GET -- Output:: Tnc
