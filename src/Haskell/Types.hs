@@ -6,10 +6,11 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FunctionalDependencies #-}
-{-# LANGUAGE TypeFamilies #-}
 
 -- See: https://www.haskell.org/onlinereport/basic.html
 
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE GADTs #-}
 module Haskell.Types where
 
 import Data.Typeable (TypeRep, typeOf)
@@ -134,7 +135,8 @@ class Printable a where
 instance Printable String where
   fmt = print
 
-printable :: IO (); printable = fmt "Hallo fmt"
+printable :: IO (); 
+printable = fmt "Hallo fmt"
 
 -- Type families
 
@@ -285,3 +287,55 @@ isNotValid x = print Valid -- for allowing show in Print use (Show)
 -- Types Family
 -- ADT Node Tree
 -- Pattern Synonyms
+
+-- # Fun deps
+-- | Functional dependencies are used to constrain the parameters of type classes
+-- a b -> c that a and b are determined uniquely
+-- Avoiding ambigous types, because for default a, b, c is independent
+class Result a b c | a b -> c where
+  instancex :: a -> b -> c
+
+--  a, b is uniquely
+-- instance Result Bool Int String where check = check  -- //error
+-- instance Result Bool Int Char where check = check
+instance Result String Int String where instancex = instancex
+instance Result Bool Int Char where instancex = instancex
+
+class Calc a b | b -> a where
+  check :: a -> b -> Bool
+instance Eq a => Calc a a where
+  check a b = a == b -- check :: forall a b. Calc a b => a -> b -> Bool
+
+--  If without fundeps, you will see this errors:
+-- • Ambiguous type variables ‘a0’, ‘b0’ arising from ...
+--  Probable fix: use a type annotation to specify what ‘a0’, 'b0' ...
+f0 :: Bool
+f0 = check 2 2
+
+
+-- # Types families
+-- G1 & G2 it's same, 2 syntax version
+-- Open type family
+type family G a :: *
+type instance G Int = Bool
+type instance G String = Char
+
+-- Closed type family
+type family G1 a where
+  G1 Int = Bool
+  G1 a = a -- Otherwise Int
+
+-- Data family (type)
+-- Class
+data family A t
+data instance A Int = Bool
+data instance A String = Char
+
+-- Data family (function)
+data family A2 a b
+data instance A2 a b where
+  DoSomeThing :: A2 a Int
+  DoSomeThingElse :: A2 a Bool
+
+f :: G1 Int
+f = True
