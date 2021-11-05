@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 46829f719bc6f6a4b2864545a146a4116fa03c65a92872987bdb58e0bf537356
+-- hash: 08a2b15962f499b675b01e65e2c429546586c4e1195fa0e208bd4f7dea7fe78b
 
 name:           haskell-from-stratch
 version:        0.1.0.0
@@ -30,14 +30,17 @@ library
       Haskell.Comments
       Haskell.Conditions
       Haskell.Debug
-      Haskell.ErrorFaq
+      Haskell.Expression
       Haskell.Functions
+      Haskell.GenericTypes
       Haskell.Infix
       Haskell.Init
       Haskell.Lists
       Haskell.Modules
       Haskell.Operators
       Haskell.Print
+      Haskell.Tree
+      Haskell.Try
       Haskell.Types
       Haskell.Variables
   other-modules:

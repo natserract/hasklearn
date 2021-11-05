@@ -10,6 +10,10 @@ import qualified Haskell.Variables as V
 import Haskell.Infix
 import Haskell.Functions
 import Haskell.Types
+import Haskell.GenericTypes
+import Haskell.Try (tryCase, tryRoot)
+import Haskell.Tree (rootTree)
+import Haskell.Expression ( outExpr )
 
 -- Monad IO
 run :: IO ()
@@ -21,7 +25,11 @@ run = do
   M.comments
   C.conditions
   V.variables
-  L.lists ["List 1", "List 2"]
+  print L.lists 
   functions
   types
   infixOp
+  genTypes
+  tryRoot
+  rootTree
+  outExpr

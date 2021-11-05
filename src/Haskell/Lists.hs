@@ -2,9 +2,13 @@ module Haskell.Lists where
 
 -- trace: for debugging
 import Debug.Trace (trace)
+import Data.Foldable (Foldable(fold))
 
 lists = do
-  basicPatternMatchOfList
+  show ""
+  -- show $ pmList [0, 1]
+  -- show $ count [2, 3]
+  -- basicPatternMatchOfList
 
 -- | List in haskell is homogen -> all values have same type
 -- See more: https://www.haskelltutorials.com/guides/haskell-lists-ultimate-guide.html
@@ -80,3 +84,20 @@ dropList = drop 1 [1, 2, 3, 4, 5]
 -- List of tuples
 listOfTuples :: [([Char], Integer)]
 listOfTuples = [("John", 20), ("Ben", 21), ("Doe", 30)]
+
+-- Pattern Matching list 2
+pmList:: [Int] -> [Int]
+-- pmList (_:x) = x -- exclude first element
+pmList [x, _] = [r] where  (r:a) = a
+pmList list = reverse list
+
+-- count :: [Char] -> [Char]
+-- count y = (n:y) where n = n ++ ""
+
+-- oo = count [2, 3]
+{--
+  let binding expression 
+  let used for bind the variables, 
+-}
+
+-- listOne = foldl (\)

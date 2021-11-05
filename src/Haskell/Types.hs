@@ -15,6 +15,7 @@
 module Haskell.Types where
 
 import Data.Typeable (TypeRep, typeOf)
+import Data.Dynamic (toDyn)
 
 types = do
   print strFunc
@@ -24,7 +25,7 @@ types = do
   print integersFunc
   print checkingTypeFunc
   print $ checkedDivision (2, 1)
-  printable
+  -- printable
   print ("httpAction", httpAction)
 
 
@@ -132,18 +133,47 @@ equalityTypeClasses (a, b)
 -- class in haskell it's not class in another language as object. It's different.
 
 -- Basic type classes
-class Printable a where
-    fmt :: a -> IO ()
-instance Printable String where
-  fmt = print
+class TypeOf a where
+    typeOfCheck :: a -> String
+-- instance Printable String where
+--   fmt a = print a 
 
-printable :: IO (); 
-printable = fmt "Hallo fmt"
+-- Eq a => Calc a a where
+-- instance Printable String String where
+--     fmt a = show a
+
+-- instance Num a => Printable a where
+--       fmt a = a
+-- instance Printable String where
+--   fmt a = a
+-- instance Printable Int where
+--     fmt a = a
+instance TypeOf [Char] where
+  typeOfCheck _ = "Char"
+
+instance TypeOf Bool where
+    typeOfCheck _ = "Bool"
+
+instance TypeOf () where
+      typeOfCheck _ = "Bool"
+
+-- instance Num [Char] => Printable [Char] where
+--     fmt = fmt
+      
+-- instance Printable Int String where
+--     fmt a = show a
+
+-- instance Printable Int where
+--       fmt = show
+
+-- printable :: IO (); 
+printable = typeOfCheck ()
 
 -- Type families
 
 -- See more: https://hackage.haskell.org/package/base-4.15.0.0/docs/Data-Ord.html
 -- >=, >, <, >, <, ==, min, max
+type AndT = forall a b. (Ord a) => (Num a) => (a, b) -> Bool
 ordTypeClasess :: (Ord a) => (Num a) => (a, b) -> Bool
 ordTypeClasess (x, y) = x >= 10
 
@@ -204,7 +234,7 @@ applyGenDoubleParam = genDoubleParam 2 3
 -- genericCheckedDivision (2, 0)
 genericCheckedDivision :: forall x y. (Eq x, Eq y) => (Num x, Num y) => (x, y) -> Maybe x
 genericCheckedDivision (dividend, divisor)
-  | divisor == 0 || dividend == 0 = Nothing
+  | divisor == 0 = Nothing
   | otherwise = Just dividend
 
 -- # Type: type synonyms
@@ -219,7 +249,7 @@ applyType a0 = 100
 -- allow for deriving
 -- if you have one constructor just use newtype, if multiple use data
 -- custom type
-newtype Primitive t = Primitive t
+newtype Primitive t = Primitive t deriving Show
 
 -- # Algebraic Data Types (ADT)
 -- Union / Enum type
@@ -248,14 +278,28 @@ checkColor c = case c of
 -- adt record
 -- Records type
 -- see: https://www.schoolofhaskell.com/user/Geraldus/algebraic-data-types-adts-with-aeson
-data Field = Field
+data Field r = Field 
   { idx :: Int,
     names :: String,
     phone :: Int,
-    address :: String
-  }
+    address :: r 
+  } deriving (Show)
 
-checkNum :: Field
+{-
+
+expect: {
+  [x:string]: any
+}
+
+-}
+m a = toDyn
+
+data NewState = NewState  {}
+
+-- https://gist.github.com/phadej/cae76444548b9cffa10d9675e013847b
+-- newtype State = State { a:: Int, b ::Int}
+
+checkNum :: Field String
 checkNum = do {
   Field
     { idx = 2,
@@ -274,6 +318,7 @@ checkTime t = case t of
   (Day d) -> case d of
     Monday -> print "Monday"
     Tuesday -> print "Tuesday"
+
 
 -- adt w deriving
 -- deriving: derived class type -> for allowing to convert any type (eg. Show, Eq, Ord, etc)
@@ -295,14 +340,24 @@ isNotValid x = print Valid -- for allowing show in Print use (Show)
 -- a b -> c is a functional dependency, a and b are determined uniquely
 -- c sepenuhnya ditentukan oleh a dan b
 -- Avoiding ambigous types, because for default a, b, c is independent
-class Result a b c | a b -> c where
-  instancex :: a -> b -> c
+-- class Result a b c | a b -> c where
+--   single :: a -> b
+--   listsM :: a -> b -> [c]
+
+class Result a b c | b -> c where
+  single :: a -> b
+  listsM :: a -> b -> [c]
 
 --  a, b is uniquely
--- instance Result Bool Int String where check = check  -- //error
--- instance Result Bool Int Char where check = check
-instance Result String Int String where instancex = instancex
-instance Result Bool Int Char where instancex = instancex
+instance Result Bool Int String where 
+  single = single
+  listsM = listsM  
+instance Result Bool String Char where 
+  single = single
+  listsM = listsM  
+  
+
+fmm = listsM @Bool @Int @String
 
 class Calc a b | b -> a where
   check :: a -> b -> Bool
@@ -343,7 +398,7 @@ type family G1 a where
 -- data families (type)
 -- Class
 data family A t
-data instance A Int = Bool
+data instance A Int = NumberT
 data instance A String = Char
 
 -- data families (function)
@@ -352,8 +407,9 @@ data instance A2 a b where
   DoSomeThing :: A2 a Int
   DoSomeThingElse :: A2 a Bool
 
-f :: G1 Int
-f = True
+-- f :: A2 
+f :: A Int
+f = NumberT
 
 -- Real case
 -- Using type classes
@@ -382,4 +438,4 @@ instance HttpMethod [Char] Http Endpoint where
 httpAction :: Endpoint
 httpAction = do
   let url = "url::endpoint"
-  selectMethod url GET -- Output:: Tnc
+  url `selectMethod` GET -- Output:: Tnc
